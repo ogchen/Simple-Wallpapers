@@ -6,17 +6,15 @@
 
 using namespace std;
 
-void watercolor(cv::Mat image, cv::Mat &result);
-void sharpen(cv::Mat &image);
+void filter(cv::Mat image, cv::Mat &result);
 void display(cv::Mat &image);
 void edge_mask(cv::Mat image, cv::Mat &edges);
-void smooth_edges(cv::Mat &image);
 int counter = 0;
 
 int main()
 {
     cv::Mat image;
-    image = cv::imread("test.jpg", CV_LOAD_IMAGE_COLOR);
+    image = cv::imread("test1.jpg", CV_LOAD_IMAGE_COLOR);
 
     if(!image.data)
     {
@@ -26,53 +24,36 @@ int main()
 
     cv::Mat layer2;
     cv::Mat edges;
-    cv::Mat layer3;
-    cv::Mat layer4;
+    cv::Mat layer3 = cv::Mat::zeros(image.rows, image.cols, image.type());
 
-    watercolor(image, layer2);
+    filter(image, layer2);
     edge_mask(layer2, edges);
-
-    layer2.copyTo(layer3);
-    sharpen(layer3);
 
     layer3.copyTo(layer2, edges);
 
-    watercolor(layer2, layer4);
-
-    layer3.copyTo(layer4, edges);
-
-    sharpen(layer4);
-    display(layer4);
+    display(layer2);
 
     cv::waitKey(0);
     return 0;
 }
 
-void watercolor(cv::Mat image, cv::Mat &result)
+
+void filter(cv::Mat image, cv::Mat &result)
 {
     cv::bilateralFilter(image, result, 10, 90, 10);
 }
 
-void sharpen(cv::Mat &image)
-{
-    cv::Mat blur;
-    cv::GaussianBlur(image, blur, cv::Size(0, 0), 3);
-    cv::addWeighted(image, 1.8, blur, -0.8, 0, image);
-}
 
 int threshold1 = 15;
 
 void edge_mask(cv::Mat image, cv::Mat &edges)
 {
-    cv::blur(image, edges, cv::Size(5, 5));
-    cv::Canny(edges, edges, threshold1, 3 * threshold1);
+    cv::Mat gray;
+    cv::cvtColor(image, gray, CV_BGR2GRAY);
+    cv::medianBlur(gray, image, 5);
+    cv::Canny(gray, edges, threshold1, 3 * threshold1);
 }
 
-void smooth_edges(cv::Mat &image)
-{
-    cv::Mat element = cv::getStructuringElement(0, cv::Size(2, 2));
-    cv::dilate(image, image, element);
-}
 
 void display(cv::Mat &image)
 {
