@@ -33,8 +33,6 @@ int main()
 
     display(layer2);
 
-    cv::imwrite("result.jpg", layer2);
-
     cv::waitKey(0);
     return 0;
 }
