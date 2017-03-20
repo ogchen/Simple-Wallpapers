@@ -4,5 +4,5 @@ Automatically downloads the images off https://www.reddit.com/r/wallpaper+wallpa
 
 Requires Linux Mint.
 
-![Before](https://raw.githubusercontent.com/Osc10/Simple-Wallpapers/master/Debug/test1.jpg)
-![After](https://raw.githubusercontent.com/Osc10/Simple-Wallpapers/master/Debug/result.jpg)
+![Before](https://raw.githubusercontent.com/Osc10/Simple-Wallpapers/master/old.jpg)
+![After](https://raw.githubusercontent.com/Osc10/Simple-Wallpapers/master/new.jpg)
