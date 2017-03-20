@@ -1,0 +1,4 @@
+  File "main.py", line 41
+    if index > 9
+               ^
+SyntaxError: invalid syntax
